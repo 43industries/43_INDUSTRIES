@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { challengeRewardsById } from "@/lib/member-experience-data";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
@@ -14,7 +14,7 @@ function getWeekStart(value: Date) {
 }
 
 export async function POST(request: Request) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const payload = (await request.json()) as { challengeId?: string; completed?: boolean };
   const challengeId = payload.challengeId ?? "";
   const completed = Boolean(payload.completed);
@@ -27,16 +27,36 @@ export async function POST(request: Request) {
   const weekStart = getWeekStart(new Date());
 
   if (completed) {
-    const created = await prisma.challengeCompletion.createMany({
-      data: { userId: user.id, challengeId, weekStart },
-      skipDuplicates: true,
+    const created = await prisma.$transaction(async (tx) => {
+      const existing = await tx.challengeCompletion.findFirst({
+        where: { userId: user.id, challengeId: null, weekStart, proof: challengeId },
+        select: { id: true },
+      });
+
+      if (existing) {
+        return false;
+      }
+
+      await tx.challengeCompletion.create({
+        data: {
+          userId: user.id,
+          challengeId: null,
+          weekStart,
+          // Store weekly challenge key as proof to keep this loop server validated
+          // without requiring every weekly prompt to exist in ClanChallenge.
+          proof: challengeId,
+        },
+      });
+
+      return true;
     });
-    if (created.count > 0) {
+
+    if (created) {
       await awardPoints(user.id, reward);
     }
   } else {
     await prisma.challengeCompletion.deleteMany({
-      where: { userId: user.id, challengeId, weekStart },
+      where: { userId: user.id, challengeId: null, weekStart, proof: challengeId },
     });
   }
 

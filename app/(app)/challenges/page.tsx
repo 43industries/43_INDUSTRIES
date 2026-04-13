@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { WeeklyChallengeBoard } from "@/components/weekly-challenge-board";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
 function getWeekStart(value: Date) {
@@ -13,11 +13,11 @@ function getWeekStart(value: Date) {
 }
 
 export default async function ChallengesPage() {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const weekStart = getWeekStart(new Date());
   const completions = await prisma.challengeCompletion.findMany({
     where: { userId: user.id, weekStart },
-    select: { challengeId: true },
+    select: { challengeId: true, proof: true },
   });
   const activeSeason = await prisma.season.findFirst({
     where: { status: "ACTIVE" },
@@ -41,7 +41,10 @@ export default async function ChallengesPage() {
       <div className="mt-8">
         <WeeklyChallengeBoard
           initialClaimed={completions
-            .map((row: { challengeId: string | null }) => row.challengeId)
+            .map(
+              (row: { challengeId: string | null; proof: string | null }) =>
+                row.challengeId ?? row.proof,
+            )
             .filter((value): value is string => Boolean(value))}
         />
       </div>

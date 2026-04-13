@@ -7,28 +7,16 @@ export default function Home() {
             43 Industries
           </p>
           <nav className="hidden gap-8 text-sm text-zinc-300 md:flex">
-            <a
-              href="#services"
-              className="transition hover:text-yellow-400"
-            >
+            <a href="#services" className="transition hover:text-yellow-400">
               Services
             </a>
-            <a
-              href="#projects"
-              className="transition hover:text-yellow-400"
-            >
+            <a href="#projects" className="transition hover:text-yellow-400">
               Projects
             </a>
-            <a
-              href="#about"
-              className="transition hover:text-yellow-400"
-            >
+            <a href="#about" className="transition hover:text-yellow-400">
               About
             </a>
-            <a
-              href="#contact"
-              className="transition hover:text-yellow-400"
-            >
+            <a href="#contact" className="transition hover:text-yellow-400">
               Contact
             </a>
           </nav>
@@ -52,10 +40,10 @@ export default function Home() {
       <main className="pb-8">
         <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-24 md:grid-cols-2 md:py-32">
           <div className="space-y-6">
-            <p className="text-sm font-medium uppercase tracking-[0.22em] text-yellow-300/90">
+            <p className="text-sm font-medium tracking-[0.22em] text-yellow-300/90 uppercase">
               Industrial Design + Execution
             </p>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
+            <h1 className="text-4xl leading-tight font-bold text-white md:text-6xl">
               Built for Heavy Industry.
               <span className="block bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent">
                 Designed for the Future.
@@ -81,7 +69,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-zinc-800/90 bg-zinc-900/70 p-7 shadow-2xl shadow-black/25 ring-1 ring-zinc-700/30 md:p-8">
+          <div className="rounded-3xl border border-zinc-800/90 bg-zinc-900/70 p-7 shadow-2xl ring-1 shadow-black/25 ring-zinc-700/30 md:p-8">
             <div className="grid gap-4">
               <div className="rounded-2xl border border-yellow-500/20 bg-zinc-800/80 p-5">
                 <p className="text-sm text-zinc-300">Systems Delivered</p>
@@ -125,9 +113,7 @@ export default function Home() {
                 key={item.title}
                 className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 transition hover:border-yellow-400/30"
               >
-                <h3 className="text-xl font-semibold text-yellow-300">
-                  {item.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-yellow-300">{item.title}</h3>
                 <p className="mt-3 leading-relaxed text-zinc-300">{item.text}</p>
               </article>
             ))}
@@ -135,7 +121,9 @@ export default function Home() {
         </section>
 
         <section id="projects" className="mx-auto w-full max-w-6xl px-6 py-20">
-          <h2 className="text-3xl font-semibold text-white md:text-4xl">Featured Projects</h2>
+          <h2 className="text-3xl font-semibold text-white md:text-4xl">
+            Featured Projects
+          </h2>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {[
               "Factory modernization portal for a global steel client.",
@@ -161,17 +149,19 @@ export default function Home() {
           className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-20 md:grid-cols-2 md:items-start"
         >
           <div>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Why 43 Industries</h2>
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">
+              Why 43 Industries
+            </h2>
             <p className="mt-4 leading-relaxed text-zinc-300">
-              We combine strategic design thinking with practical industrial execution
-              to deliver measurable business outcomes. Every engagement is built around
+              We combine strategic design thinking with practical industrial execution to
+              deliver measurable business outcomes. Every engagement is built around
               reliability, scalability, and speed.
             </p>
           </div>
           <div className="rounded-2xl border border-yellow-500/15 bg-zinc-900/70 p-6 ring-1 ring-zinc-700/30">
             <p className="text-zinc-200">
-              &quot;43 Industries transformed how our operations team interacts with mission
-              data. Productivity was up in under 90 days.&quot;
+              &quot;43 Industries transformed how our operations team interacts with
+              mission data. Productivity was up in under 90 days.&quot;
             </p>
             <p className="mt-4 text-sm text-zinc-400">
               Director of Operations, Apex Forge
@@ -181,7 +171,9 @@ export default function Home() {
 
         <section id="contact" className="mx-auto w-full max-w-6xl px-6 py-20">
           <div className="rounded-3xl border border-yellow-400/35 bg-gradient-to-br from-yellow-400/10 via-zinc-900/80 to-zinc-900 p-8 text-center ring-1 ring-zinc-700/30 md:p-10">
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Ready to Build with 43?</h2>
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">
+              Ready to Build with 43?
+            </h2>
             <p className="mt-3 leading-relaxed text-zinc-200">
               Tell us your goals and we will map a design-to-delivery plan for your team.
             </p>

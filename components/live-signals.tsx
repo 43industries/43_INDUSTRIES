@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { CommunityInsights } from "@/lib/community-insights";
+import type { SocietyInsights } from "@/lib/society-insights";
 
 type SignalTone = "violet" | "amber";
 
@@ -39,7 +39,7 @@ function LiveSignalCard({
   );
 }
 
-export function LiveSignals({ insights }: { insights: CommunityInsights | null }) {
+export function LiveSignals({ insights }: { insights: SocietyInsights | null }) {
   return (
     <div className="grid gap-5 md:grid-cols-3">
       <LiveSignalCard
@@ -53,10 +53,10 @@ export function LiveSignals({ insights }: { insights: CommunityInsights | null }
         footnote={
           insights?.featuredThread
             ? `${insights.featuredThread.commentCount} comments`
-            : "Community feed is ready"
+            : "Society feed is ready"
         }
         tone="violet"
-        href="/community"
+        href="/society"
       />
       <LiveSignalCard
         label="Research hub"

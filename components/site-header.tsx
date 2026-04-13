@@ -1,17 +1,18 @@
+"use client";
+
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { UserButton, useAuth } from "@clerk/nextjs";
 
 const nav = [
   { href: "/library", label: "Library" },
-  { href: "/community", label: "Community" },
+  { href: "/society", label: "Society" },
   { href: "/factions", label: "Factions" },
   { href: "/plans", label: "Plans" },
   { href: "/dashboard", label: "Dashboard" },
 ] as const;
 
-export async function SiteHeader() {
-  const { userId } = await auth();
+export function SiteHeader() {
+  const { userId } = useAuth();
 
   return (
     <header className="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur">

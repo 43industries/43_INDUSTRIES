@@ -1,6 +1,6 @@
-# 43 Industries — community platform (Phase A)
+# 43 Industries — society platform (Phase A)
 
-Greenfield scaffold for the four-layer community described in the product plan:
+Greenfield scaffold for the four-layer society described in the product plan:
 marketing surface, authenticated participation, lightweight progression, and a
 research hub. The “game” layer is intentionally a **meta-game** (badges, seasons,
 challenges) validated on the server—not a standalone engine.
@@ -34,7 +34,7 @@ This project uses Clerk for the fastest MVP auth path.
 1. Create a Clerk application.
 2. Copy `.env.example` to `.env.local`.
 3. Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, and `DATABASE_URL`.
-4. (Optional AI drafting) set `ANTHROPIC_API_KEY` for Claude-powered draft assist in community posting.
+4. (Optional AI drafting) set `ANTHROPIC_API_KEY` for Claude-powered draft assist in society posting.
 5. Generate Prisma client:
 
 ```bash
@@ -116,7 +116,7 @@ Run this before promoting a new deploy:
 3. `npm run test`
 4. `npm run build`
 5. `npm run prisma:migrate:deploy` and `npm run prisma:seed`
-6. Visit `/`, `/community`, `/library`, `/onboarding`, and `/moderation`
+6. Visit `/`, `/society`, `/library`, `/onboarding`, and `/moderation`
 7. Publish a thread, like it, and add a comment
 8. Open a library entry and click **Discuss this entry** to create or reuse its discussion thread
 9. Confirm challenge/onboarding toggles still persist and refresh correctly
@@ -137,7 +137,7 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
 ## Layout
 
 - `app/(marketing)` — public landing, legal placeholders, join/login stubs
-- `app/(app)` — member surfaces: `/dashboard`, `/community`, `/library`, `/clans`, `/seasons`, `/leaderboard`
+- `app/(app)` — member surfaces: `/dashboard`, `/society`, `/library`, `/clans`, `/seasons`, `/leaderboard`
 - `app/(marketing)/factions` — public clan world map and read-only faction profiles
 - `app/(marketing)/plans` — public roadmap and projections pages
 - `components/live-signals.tsx` — homepage hooks for featured thread, library item, challenge

@@ -2,12 +2,12 @@ import Link from "next/link";
 import { LiveSignals } from "@/components/live-signals";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getCommunityInsights } from "@/lib/community-insights";
+import { getSocietyInsights } from "@/lib/society-insights";
 
 const pillars = [
   {
     title: "Discovery",
-    text: "A public surface that explains what 43 Industries is and why the community exists.",
+    text: "A public surface that explains what 43 Industries is and why the society exists.",
   },
   {
     title: "Participation",
@@ -27,11 +27,11 @@ const differentiators = [
   "One identity across discussions, library depth, and progression",
   "Server-validated reputation so effort and quality are rewarded fairly",
   "Shared tags connect discovery, conversation, and challenges in one loop",
-  "Live homepage signals keep the brand surface fresh and community-driven",
+  "Live homepage signals keep the brand surface fresh and society-driven",
 ] as const;
 
 export default async function Home() {
-  const insights = await getCommunityInsights();
+  const insights = await getSocietyInsights();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-violet-950/15 to-zinc-950 text-zinc-100">
@@ -41,10 +41,10 @@ export default async function Home() {
         <section className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1.1fr_0.9fr] md:py-28">
           <div className="space-y-6">
             <p className="text-sm uppercase tracking-[0.25em] text-violet-300/90">
-              Community platform
+              Society platform
             </p>
             <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
-              The most electric industrial community on the internet.
+              The most electric industrial society on the internet.
             </h1>
             <p className="max-w-xl text-lg text-zinc-300">
               43 Industries turns passive readers into active builders through one
@@ -94,7 +94,7 @@ export default async function Home() {
         <section className="mx-auto w-full max-w-6xl px-6 py-16">
           <h2 className="text-3xl font-semibold text-white">Why this wins attention</h2>
           <p className="mt-3 max-w-3xl text-zinc-400">
-            The best communities feel alive, useful, and earned. This product is built
+            The best societies feel alive, useful, and earned. This product is built
             so every visit reveals activity, every contribution matters, and every member
             sees momentum in their profile.
           </p>
@@ -113,9 +113,9 @@ export default async function Home() {
         <section className="mx-auto w-full max-w-6xl space-y-8 px-6 py-16">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 className="text-3xl font-semibold text-white">Live community signals</h2>
+              <h2 className="text-3xl font-semibold text-white">Live society signals</h2>
               <p className="mt-2 max-w-2xl text-zinc-400">
-                Real activity from the community, library, and challenge system appears here.
+                Real activity from the society, library, and challenge system appears here.
               </p>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default async function Home() {
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-6 py-16">
-          <h2 className="text-3xl font-semibold text-white">Four layers, one community</h2>
+          <h2 className="text-3xl font-semibold text-white">Four layers, one society</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {pillars.map((pillar) => (
               <article
@@ -195,10 +195,10 @@ export default async function Home() {
                 href="/join"
                 className="inline-flex rounded-full bg-yellow-400 px-6 py-3 font-semibold text-zinc-950 shadow-lg shadow-violet-600/25 transition hover:bg-yellow-300"
               >
-                Join the community
+                Join the society
               </Link>
               <Link
-                href="/community"
+                href="/society"
                 className="inline-flex rounded-full border border-zinc-600 px-6 py-3 font-semibold text-zinc-100 transition hover:border-violet-400/60"
               >
                 Preview discussions

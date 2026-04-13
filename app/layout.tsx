@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "43 Industries | The Industrial Community Engine",
+  title: "43 Industries | The Industrial Society Engine",
   description:
-    "The high-momentum community where industrial operators, builders, and researchers learn, contribute, and earn reputation together.",
+    "The high-momentum society where industrial operators, builders, and researchers learn, contribute, and earn reputation together.",
 };
 
 export default function RootLayout({

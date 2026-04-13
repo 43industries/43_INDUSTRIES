@@ -100,7 +100,7 @@ Write-Host @"
 - Join/login flow lands on /dashboard
 - Onboarding toggles persist after refresh
 - Weekly challenges persist for current week
-- Create thread + comment in /community and verify persistence
+- Create thread + comment in /society and verify persistence
 - Leaderboard updates from progression points
 - Rewards endpoints return expected payloads:
   - /api/rewards/actions

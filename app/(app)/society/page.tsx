@@ -3,7 +3,7 @@ import { ThreadComposer } from "@/components/thread-composer";
 import { prisma } from "@/lib/prisma";
 
 const PAGE_SIZE = 10;
-type CommunityThread = {
+type SocietyThread = {
   id: string;
   title: string;
   body: string;
@@ -14,17 +14,17 @@ type CommunityThread = {
   _count: { reactions: number };
 };
 
-type CommunityPageProps = {
+type SocietyPageProps = {
   searchParams: Promise<{
     cursor?: string;
   }>;
 };
 
-export default async function CommunityPage({ searchParams }: CommunityPageProps) {
+export default async function SocietyPage({ searchParams }: SocietyPageProps) {
   const params = await searchParams;
   const cursor = params.cursor;
 
-  let threads: CommunityThread[] = [];
+  let threads: SocietyThread[] = [];
   let nextCursor: string | null = null;
   let dbUnavailable = false;
 
@@ -53,7 +53,7 @@ export default async function CommunityPage({ searchParams }: CommunityPageProps
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
-      <p className="text-sm uppercase tracking-[0.2em] text-amber-200">Community</p>
+      <p className="text-sm uppercase tracking-[0.2em] text-amber-200">Society</p>
       <h1 className="mt-3 text-3xl font-semibold text-white">Discussions</h1>
       <p className="mt-4 max-w-2xl text-zinc-400">
         Phase B now ships authenticated access with Prisma-backed thread and comment

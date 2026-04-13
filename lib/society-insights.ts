@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export type CommunityInsights = {
+export type SocietyInsights = {
   featuredThread: {
     id: string;
     title: string;
@@ -20,7 +20,7 @@ export type CommunityInsights = {
   } | null;
 };
 
-export async function getCommunityInsights(): Promise<CommunityInsights | null> {
+export async function getSocietyInsights(): Promise<SocietyInsights | null> {
   try {
     const [featuredThread, featuredLibraryEntry, activeChallenge] = await Promise.all([
       prisma.post.findFirst({

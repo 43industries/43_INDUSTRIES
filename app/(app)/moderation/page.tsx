@@ -52,10 +52,10 @@ export default function ModerationPage() {
       </div>
 
       <Link
-        href="/community"
+        href="/society"
         className="mt-8 inline-flex text-sm font-medium text-yellow-300 hover:text-yellow-200"
       >
-        ← Back to community
+        ← Back to society
       </Link>
     </div>
   );

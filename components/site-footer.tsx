@@ -8,7 +8,7 @@ export function SiteFooter() {
           <p className="font-medium text-zinc-200">Safety and trust</p>
           <p className="max-w-xl">
             User-generated discussion is moderated with clear reporting paths. This
-            placeholder will link to community guidelines when Phase B ships.
+            placeholder will link to society guidelines when Phase B ships.
           </p>
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-zinc-400">

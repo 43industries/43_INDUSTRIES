@@ -1,8 +1,8 @@
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
 export default async function ProfilePage() {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const progress = await prisma.profileProgress.findUnique({
     where: { userId: user.id },
   });
@@ -12,7 +12,7 @@ export default async function ProfilePage() {
       <p className="text-sm uppercase tracking-[0.2em] text-violet-300">Profile</p>
       <h1 className="mt-3 text-3xl font-semibold text-white">Member identity</h1>
       <p className="mt-4 max-w-2xl text-zinc-400">
-        This profile unifies your account identity and progression state across community
+        This profile unifies your account identity and progression state across society
         threads, library discussions, and weekly challenges.
       </p>
 

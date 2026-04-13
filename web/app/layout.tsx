@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "43 Industries | Community, library, and progression",
+  title: "43 Industries | Society, library, and progression",
   description:
-    "A single community that blends discovery, participation, light progression, and a research hub for industrial teams.",
+    "A single society that blends discovery, participation, light progression, and a research hub for industrial teams.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

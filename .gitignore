@@ -42,3 +42,11 @@ next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Stale / backup dependency trees (never commit)
+web/node_modules_prev/
+web/node_modules_stale_old/
+web/node_modules_corrupt/
+
+# Local archives (do not commit)
+/files.zip

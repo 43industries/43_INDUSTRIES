@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
 type PageProps = {
@@ -8,7 +8,7 @@ type PageProps = {
 };
 
 export default async function ClanDetailPage({ params }: PageProps) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const { slug } = await params;
   const clan = await prisma.clan.findUnique({
     where: { slug },

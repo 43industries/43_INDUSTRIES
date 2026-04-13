@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { trackEvent } from "@/lib/events";
@@ -7,7 +7,7 @@ import { trackEvent } from "@/lib/events";
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function POST(request: Request, context: RouteContext) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const rateLimit = checkRateLimit({
     key: `vote:${user.id}`,
     limit: 20,

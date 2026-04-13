@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ClanVisibility } from "@prisma/client";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { trackEvent } from "@/lib/events";
@@ -17,7 +17,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const rateLimit = checkRateLimit({
     key: `create-clan:${user.id}`,
     limit: 10,

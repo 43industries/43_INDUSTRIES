@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
-export async function requireCommunityUser() {
+export async function requireSocietyUser() {
   const clerkUser = await currentUser();
 
   if (!clerkUser) {

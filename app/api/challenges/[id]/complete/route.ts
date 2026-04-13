@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
 import { trackEvent } from "@/lib/events";
@@ -16,7 +16,7 @@ function getWeekStart(value: Date) {
 }
 
 export async function POST(request: Request, context: RouteContext) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const { id } = await context.params;
   const payload = (await request.json()) as { proof?: string };
 

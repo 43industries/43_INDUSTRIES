@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function POST(_: Request, context: RouteContext) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const { id } = await context.params;
   const post = await prisma.post.findUnique({ where: { id }, select: { id: true } });
   if (!post) {

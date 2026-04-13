@@ -3,9 +3,9 @@ import { SiteHeader } from "@/components/site-header";
 
 const planCards = [
   {
-    title: "Community Platform Plan",
-    text: "Roadmap for a faction-style community with shared identity, threads, library, and progression.",
-    href: "/plans/community",
+    title: "Society Platform Plan",
+    text: "Roadmap for a faction-style society with shared identity, threads, library, and progression.",
+    href: "/plans/society",
   },
   {
     title: "Growth Projections",
@@ -22,7 +22,7 @@ export default function PlansIndexPage() {
         <p className="text-sm uppercase tracking-[0.2em] text-violet-300">Public plans</p>
         <h1 className="mt-3 text-4xl font-semibold text-white">How 43 Industries is being built</h1>
         <p className="mt-4 max-w-2xl text-zinc-400">
-          Transparent roadmap pages so community members can see direction, milestones, and targets.
+          Transparent roadmap pages so society members can see direction, milestones, and targets.
         </p>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">

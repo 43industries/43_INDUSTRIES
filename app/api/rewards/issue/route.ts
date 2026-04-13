@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { issueReward } from "@/lib/rewards";
 
 type IssueRewardRequest = {
@@ -10,7 +10,7 @@ type IssueRewardRequest = {
 };
 
 export async function POST(request: Request) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const payload = (await request.json()) as IssueRewardRequest;
 
   if (!payload.walletAddress || !payload.action) {

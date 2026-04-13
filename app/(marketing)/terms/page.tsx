@@ -7,7 +7,7 @@ export default function TermsPage() {
       <div className="mx-auto max-w-3xl px-6 py-16 text-zinc-200">
       <h1 className="text-3xl font-semibold text-white">Terms (placeholder)</h1>
       <p className="mt-4 text-zinc-400">
-        This page reserves space for terms of use and community guidelines. Replace
+        This page reserves space for terms of use and society guidelines. Replace
         with counsel-approved copy before inviting members.
       </p>
       </div>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { getClanMembership } from "@/lib/permissions";
 
@@ -16,7 +16,7 @@ export async function GET(_: Request, context: RouteContext) {
 }
 
 export async function POST(request: Request, context: RouteContext) {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const { id } = await context.params;
   const membership = await getClanMembership(user.id, id);
   if (!membership || membership.status !== "ACTIVE") {

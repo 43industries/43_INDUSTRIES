@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { OnboardingChecklist } from "@/components/onboarding-checklist";
-import { requireCommunityUser } from "@/lib/community-user";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
 export default async function OnboardingPage() {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const onboarding = await prisma.onboardingCompletion.findMany({
     where: { userId: user.id },
     select: { stepId: true },
@@ -15,7 +15,7 @@ export default async function OnboardingPage() {
       <p className="text-sm uppercase tracking-[0.2em] text-violet-300">Onboarding</p>
       <h1 className="mt-3 text-3xl font-semibold text-white">Start strong in 43 Industries</h1>
       <p className="mt-4 max-w-2xl text-zinc-400">
-        Complete your first guided actions to unlock reputation, learn community norms, and
+        Complete your first guided actions to unlock reputation, learn society norms, and
         build visible momentum in your profile.
       </p>
       <div className="mt-8">

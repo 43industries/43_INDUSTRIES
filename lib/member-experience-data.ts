@@ -20,7 +20,7 @@ export const onboardingSteps = [
   {
     id: "challenge",
     title: "Join the weekly challenge",
-    detail: "Submit one measurable improvement tied to this week's prompt and community norms.",
+    detail: "Submit one measurable improvement tied to this week's prompt and society norms.",
     points: 80,
   },
 ] as const;
@@ -41,7 +41,7 @@ export const weeklyChallenges = [
   {
     id: "knowledge-loop",
     title: "Knowledge Loop",
-    prompt: "Connect a library insight to an active community discussion.",
+    prompt: "Connect a library insight to an active society discussion.",
     reward: 70,
   },
 ] as const;

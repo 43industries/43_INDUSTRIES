@@ -1,12 +1,12 @@
 ---
 title: Signals from the field
 summary: A lightweight field read on what members are discussing this week.
-tags: research, community, operations
+tags: research, society, operations
 ---
 ## Why this matters
 
-Communities become valuable when raw discussion gets turned into reusable patterns.
-This entry captures practical signals from the latest community conversations and
+Societies become valuable when raw discussion gets turned into reusable patterns.
+This entry captures practical signals from the latest society conversations and
 turns them into action prompts.
 
 ## Three current signals
@@ -19,4 +19,4 @@ turns them into action prompts.
 
 Run a weekly "read and reflect" prompt tied to one thread and one resource.
 Reward meaningful responses with progression points so research behavior and
-community behavior reinforce each other.
+society behavior reinforce each other.

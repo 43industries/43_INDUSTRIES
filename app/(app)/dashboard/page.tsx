@@ -2,8 +2,8 @@ import Link from "next/link";
 import { OnboardingChecklist } from "@/components/onboarding-checklist";
 import { ReputationLeaderboard } from "@/components/reputation-leaderboard";
 import { WeeklyChallengeBoard } from "@/components/weekly-challenge-board";
-import { getCommunityInsights } from "@/lib/community-insights";
-import { requireCommunityUser } from "@/lib/community-user";
+import { getSocietyInsights } from "@/lib/society-insights";
+import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
 function getWeekStart(value: Date) {
@@ -16,7 +16,7 @@ function getWeekStart(value: Date) {
 }
 
 export default async function DashboardPage() {
-  const user = await requireCommunityUser();
+  const user = await requireSocietyUser();
   const weekStart = getWeekStart(new Date());
 
   const [onboarding, challenges, topProgress, insights] = await Promise.all([
@@ -33,7 +33,7 @@ export default async function DashboardPage() {
       take: 8,
       include: { user: true },
     }),
-    getCommunityInsights(),
+    getSocietyInsights(),
   ]);
 
   const leaderboardEntries = topProgress.map(
@@ -59,9 +59,9 @@ export default async function DashboardPage() {
       </p>
       <div className="mt-8 space-y-6">
         <section className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
-          <h2 className="text-lg font-semibold text-white">Community snapshot</h2>
+          <h2 className="text-lg font-semibold text-white">Society snapshot</h2>
           <div className="mt-4 grid gap-3 text-sm md:grid-cols-3">
-            <Link href="/community" className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 hover:border-zinc-700">
+            <Link href="/society" className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 hover:border-zinc-700">
               <p className="text-zinc-400">Featured thread</p>
               <p className="mt-1 font-medium text-zinc-100">
                 {insights?.featuredThread?.title ?? "No threads yet"}

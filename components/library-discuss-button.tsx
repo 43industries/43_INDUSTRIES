@@ -18,7 +18,7 @@ export function LibraryDiscussButton({ slug }: { slug: string }) {
         return;
       }
       const payload = (await response.json()) as { threadId: string };
-      router.push(`/community?thread=${payload.threadId}`);
+      router.push(`/society?thread=${payload.threadId}`);
       router.refresh();
     });
   };

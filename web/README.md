@@ -1,6 +1,6 @@
 # 43 Industries Web
 
-Phase A scaffold for the 43 Industries community platform:
+Phase A scaffold for the 43 Industries society platform:
 
 - Next.js App Router + TypeScript
 - Tailwind CSS v4
@@ -60,9 +60,10 @@ See `.env.example` for local defaults.
 
 The current game layer is intentionally a meta-progression concept (challenges/points),
 not a standalone game engine.
-# 43 Industries — community platform (Phase A)
 
-Greenfield scaffold for the four-layer community described in the product plan:
+# 43 Industries — society platform (Phase A)
+
+Greenfield scaffold for the four-layer society described in the product plan:
 marketing surface, authenticated participation, lightweight progression, and a
 research hub. The “game” layer is intentionally a **meta-game** (badges, seasons,
 challenges) validated on the server—not a standalone engine.
@@ -97,7 +98,7 @@ data layer is connected.
 ## Layout
 
 - `app/(marketing)` — public landing, legal placeholders, join/login stubs
-- `app/(app)` — reserved member surfaces: `/dashboard`, `/community`, `/library`
+- `app/(app)` — reserved member surfaces: `/dashboard`, `/society`, `/library`
 - `components/live-signals.tsx` — homepage hooks for featured thread, library item, challenge
 - `content/library/` — MDX or MD will land here in Phase C
 - `prisma/schema.prisma` — minimal relational model for users, posts, library, progress
@@ -105,7 +106,7 @@ data layer is connected.
 ## Roadmap gates
 
 1. **Phase A** — Skeleton (this commit): routes, placeholders, README
-2. **Phase B** — Auth + community core
+2. **Phase B** — Auth + society core
 3. **Phase C** — Library MDX + search
 4. **Phase D** — Weekly challenge loop + server validation
 5. **Phase E** — Moderation polish, analytics, performance

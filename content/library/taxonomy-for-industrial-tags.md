@@ -5,7 +5,7 @@ tags: taxonomy, tagging, governance
 ---
 ## Shared taxonomy principles
 
-Use one tag language across community threads and library resources to avoid
+Use one tag language across society threads and library resources to avoid
 fragmented browsing paths.
 
 ## Recommended baseline
@@ -13,7 +13,7 @@ fragmented browsing paths.
 - `research` for evidence-heavy findings.
 - `operations` for implementation or systems work.
 - `governance` for policy and decision process topics.
-- `community` for member behavior and participation loops.
+- `society` for member behavior and participation loops.
 
 ## Rollout approach
 
