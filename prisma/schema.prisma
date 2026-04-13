@@ -1,0 +1,330 @@
+// Minimal v1 data model — wire to Postgres (Neon/Supabase) in Phase B.
+// Run `npx prisma generate` after installing `prisma` and setting DATABASE_URL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  MODERATOR
+  ADMIN
+}
+
+enum ClanVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ClanRole {
+  MEMBER
+  ELDER
+  CHIEF
+  FOUNDER
+}
+
+enum MembershipStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  LEFT
+}
+
+enum SubClanRole {
+  MEMBER
+  LEAD
+  CHIEF_DELEGATE
+}
+
+enum ElectionStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
+
+enum LeadershipSource {
+  APPOINTMENT
+  ELECTION
+}
+
+enum SeasonStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  name      String?
+  image     String?
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts                 Post[]
+  comments              Comment[]
+  threadReactions       ThreadReaction[]
+  progress              ProfileProgress?
+  onboardingCompletions OnboardingCompletion[]
+  challengeCompletions  ChallengeCompletion[]
+  createdClans          Clan[]                 @relation("ClanCreator")
+  clanMemberships       ClanMembership[]
+  subClanMemberships    SubClanMembership[]
+  createdElections      Election[]             @relation("ElectionCreator")
+  electionCandidates    ElectionCandidate[]
+  votesCast             ElectionVote[]        @relation("ElectionVotesCast")
+  votesReceived         ElectionVote[]        @relation("ElectionVotesReceived")
+  leadershipTerms       LeadershipTerm[]
+  verifiedCompletions   ChallengeCompletion[]  @relation("ChallengeVerifier")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  clanId    String?
+  clan      Clan?    @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  subClanId String?
+  subClan   SubClan? @relation(fields: [subClanId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments Comment[]
+  tags     Tag[]     @relation("PostTags")
+  reactions ThreadReaction[]
+  linkedLibraryEntry LibraryEntry? @relation("LibraryDiscussThread")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Tag {
+  id       String         @id @default(cuid())
+  label    String         @unique
+  posts    Post[]         @relation("PostTags")
+  entries  LibraryEntry[] @relation("LibraryEntryTags")
+}
+
+model LibraryEntry {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  summary     String
+  bodyPath    String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tags Tag[] @relation("LibraryEntryTags")
+  discussThreadId String? @unique
+  discussThread Post? @relation("LibraryDiscussThread", fields: [discussThreadId], references: [id], onDelete: SetNull)
+}
+
+model ThreadReaction {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+}
+
+model ProfileProgress {
+  userId      String   @id
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points      Int      @default(0)
+  level       Int      @default(1)
+  xp          Int      @default(0)
+  reputation  Int      @default(0)
+  title       String?  @default("Recruit")
+  seasonScore Int      @default(0)
+  lastEventAt DateTime @default(now())
+}
+
+model OnboardingCompletion {
+  id        String   @id @default(cuid())
+  userId    String
+  stepId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, stepId])
+}
+
+model ChallengeCompletion {
+  id          String   @id @default(cuid())
+  userId      String
+  challengeId String?
+  challenge   ClanChallenge? @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  weekStart   DateTime
+  proof       String?
+  verifiedAt  DateTime?
+  verifiedById String?
+  verifiedBy  User?    @relation("ChallengeVerifier", fields: [verifiedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId, weekStart])
+}
+
+model Clan {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  description String
+  manifesto   String?
+  rules       String?
+  visibility  ClanVisibility @default(PUBLIC)
+  createdById String
+  createdBy   User           @relation("ClanCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  memberships    ClanMembership[]
+  posts          Post[]
+  subClans       SubClan[]
+  elections      Election[]
+  leadershipTerm LeadershipTerm[]
+  challenges     ClanChallenge[]
+}
+
+model ClanMembership {
+  id       String           @id @default(cuid())
+  userId   String
+  clanId   String
+  role     ClanRole         @default(MEMBER)
+  status   MembershipStatus @default(ACTIVE)
+  joinedAt DateTime         @default(now())
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clan     Clan             @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, clanId])
+}
+
+model SubClan {
+  id          String   @id @default(cuid())
+  clanId      String
+  name        String
+  slug        String
+  purpose     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  clan        Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  memberships SubClanMembership[]
+  posts       Post[]
+
+  @@unique([clanId, slug])
+}
+
+model SubClanMembership {
+  id        String     @id @default(cuid())
+  userId    String
+  subClanId String
+  role      SubClanRole @default(MEMBER)
+  joinedAt  DateTime   @default(now())
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subClan   SubClan    @relation(fields: [subClanId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subClanId])
+}
+
+model Election {
+  id          String         @id @default(cuid())
+  clanId       String
+  status       ElectionStatus @default(DRAFT)
+  startsAt     DateTime
+  endsAt       DateTime
+  createdById  String
+  termMonths   Int            @default(3)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  clan         Clan           @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  createdBy    User           @relation("ElectionCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  candidates ElectionCandidate[]
+  votes      ElectionVote[]
+}
+
+model ElectionCandidate {
+  id         String   @id @default(cuid())
+  electionId String
+  userId     String
+  createdAt  DateTime @default(now())
+  election   Election @relation(fields: [electionId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([electionId, userId])
+}
+
+model ElectionVote {
+  id          String   @id @default(cuid())
+  electionId  String
+  voterId     String
+  candidateId String
+  createdAt   DateTime @default(now())
+  election    Election @relation(fields: [electionId], references: [id], onDelete: Cascade)
+  voter       User     @relation("ElectionVotesCast", fields: [voterId], references: [id], onDelete: Cascade)
+  candidate   User     @relation("ElectionVotesReceived", fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([electionId, voterId])
+}
+
+model LeadershipTerm {
+  id        String           @id @default(cuid())
+  clanId    String
+  userId    String
+  role      ClanRole
+  startsAt  DateTime
+  endsAt    DateTime?
+  source    LeadershipSource
+  createdAt DateTime         @default(now())
+  clan      Clan             @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Season {
+  id        String       @id @default(cuid())
+  name      String
+  status    SeasonStatus @default(PLANNED)
+  startsAt  DateTime
+  endsAt    DateTime
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  challenges ClanChallenge[]
+}
+
+model ClanChallenge {
+  id        String   @id @default(cuid())
+  seasonId  String
+  clanId    String
+  title     String
+  rules     String
+  points    Int      @default(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  season    Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  clan      Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  completions ChallengeCompletion[]
+}

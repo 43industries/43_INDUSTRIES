@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  role      UserRole @default(MEMBER)
+  posts     Post[]
+  comments  Comment[]
+  progress  ProfileProgress?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  title     String
+  body      String
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String
+  postId    String
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id             String            @id @default(cuid())
+  name           String            @unique
+  slug           String            @unique
+  libraryEntries LibraryEntryTag[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+}
+
+model LibraryEntry {
+  id          String            @id @default(cuid())
+  title       String
+  slug        String            @unique
+  summary     String
+  contentPath String?
+  body        String?
+  publishedAt DateTime?
+  tags        LibraryEntryTag[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model LibraryEntryTag {
+  tagId   String
+  entryId String
+  tag     Tag          @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  entry   LibraryEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@id([tagId, entryId])
+}
+
+model ProfileProgress {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points      Int      @default(0)
+  level       Int      @default(1)
+  lastEventAt DateTime?
+  updatedAt   DateTime @updatedAt
+}
+
+enum UserRole {
+  MEMBER
+  MODERATOR
+  ADMIN
+}
+// Minimal v1 data model — wire to Postgres (Neon/Supabase) in Phase B.
+// Run `npx prisma generate` after installing `prisma` and setting DATABASE_URL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  MODERATOR
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  image     String?
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts    Post[]
+  comments Comment[]
+  progress ProfileProgress?
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments Comment[]
+  tags     Tag[]     @relation("PostTags")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Tag {
+  id       String         @id @default(cuid())
+  label    String         @unique
+  posts    Post[]         @relation("PostTags")
+  entries  LibraryEntry[] @relation("LibraryEntryTags")
+}
+
+model LibraryEntry {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  summary     String
+  bodyPath    String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tags Tag[] @relation("LibraryEntryTags")
+}
+
+model ProfileProgress {
+  userId      String   @id
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points      Int      @default(0)
+  level       Int      @default(1)
+  lastEventAt DateTime @default(now())
+}
