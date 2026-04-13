@@ -44,6 +44,28 @@ if ($missing.Count -gt 0) {
   Write-Host "All required environment variables are present." -ForegroundColor Green
 }
 
+$rewardsVars = @(
+  "XRPL_NODE",
+  "DISTRIBUTOR_ADDRESS",
+  "DISTRIBUTOR_SECRET",
+  "ISSUER_ADDRESS",
+  "CURRENCY_CODE"
+)
+
+$missingRewards = @()
+foreach ($varName in $rewardsVars) {
+  if (-not (Get-Item "Env:$varName" -ErrorAction SilentlyContinue)) {
+    $missingRewards += $varName
+  }
+}
+
+if ($missingRewards.Count -gt 0) {
+  WarnMsg "Rewards API env missing: $($missingRewards -join ', ')"
+  WarnMsg "Rewards routes may fail until these are configured."
+} else {
+  Write-Host "Rewards API env variables are present." -ForegroundColor Green
+}
+
 Step "Prisma generate"
 npm run prisma:generate
 
@@ -80,6 +102,9 @@ Write-Host @"
 - Weekly challenges persist for current week
 - Create thread + comment in /community and verify persistence
 - Leaderboard updates from progression points
+- Rewards endpoints return expected payloads:
+  - /api/rewards/actions
+  - /api/rewards/wallet/{address}/trustline
 - Sign out and verify protected routes block or redirect
 - Too-short thread/comment shows validation errors
 "@

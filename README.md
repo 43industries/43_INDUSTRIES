@@ -34,25 +34,63 @@ This project uses Clerk for the fastest MVP auth path.
 1. Create a Clerk application.
 2. Copy `.env.example` to `.env.local`.
 3. Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, and `DATABASE_URL`.
-4. Generate Prisma client:
+4. (Optional AI drafting) set `ANTHROPIC_API_KEY` for Claude-powered draft assist in community posting.
+5. Generate Prisma client:
 
 ```bash
 npm run prisma:generate
 ```
 
-5. Run migrations:
+6. Run migrations:
 
 ```bash
 npm run prisma:migrate:deploy
 ```
 
-6. (Optional local data) seed example content:
+7. (Optional local data) seed example content:
 
 ```bash
 npm run prisma:seed
 ```
 
-7. Restart `npm run dev`.
+8. Restart `npm run dev`.
+
+### 43 rewards integration
+
+The XRPL rewards engine is integrated in-repo under `services/rewards-api` and exposed through Next API routes:
+
+- `GET /api/rewards/actions`
+- `POST /api/rewards/issue` (authenticated user required)
+- `GET /api/rewards/wallet/:address/trustline`
+
+Set these environment variables before enabling rewards calls:
+
+- `XRPL_NODE`
+- `DISTRIBUTOR_ADDRESS`
+- `DISTRIBUTOR_SECRET`
+- `ISSUER_ADDRESS`
+- `ISSUER_SECRET`
+- `CURRENCY_CODE` (use `43`)
+- `API_SECRET` (used by standalone rewards server mode)
+- `REWARDS_API_PORT` (optional; standalone rewards server mode)
+
+Standalone scripts are available if you want to run the rewards service directly:
+
+```bash
+npm run rewards:api
+npm run rewards:issue-token
+npm run rewards:blackhole-issuer
+```
+
+### Claude integration
+
+Claude is connected through a secure server endpoint at `app/api/ai/claude/route.ts`.
+
+- Dependency: `@anthropic-ai/sdk`
+- Env key: `ANTHROPIC_API_KEY` (server-side only; do not expose client-side)
+- UI integration: `Draft with Claude` actions in `components/thread-composer.tsx`
+  - Thread drafting from current thread body context
+  - Comment drafting from current comment draft + thread context
 
 ### Seed the faction world (optional, recommended)
 
@@ -82,6 +120,10 @@ Run this before promoting a new deploy:
 7. Publish a thread, like it, and add a comment
 8. Open a library entry and click **Discuss this entry** to create or reuse its discussion thread
 9. Confirm challenge/onboarding toggles still persist and refresh correctly
+10. Verify `GET /api/rewards/actions` responds with actions and tiers
+11. Verify `GET /api/rewards/wallet/:address/trustline` returns a boolean
+12. Verify `GET /api/health` returns `status: ok`
+13. Verify `GET /api/ready` returns `status: ready` in production env
 
 ## CI
 
@@ -142,4 +184,19 @@ To run smoke check and dev server together in one terminal:
 
 ```bash
 powershell -ExecutionPolicy Bypass -File scripts/smoke-check.ps1
+```
+
+## Release command
+
+Use the production release script:
+
+```bash
+npm run release
+```
+
+Optional flags:
+
+```bash
+powershell -ExecutionPolicy Bypass -File scripts/release.ps1 -SkipChecks
+powershell -ExecutionPolicy Bypass -File scripts/release.ps1 -SkipDeploy
 ```

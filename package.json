@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "prebuild": "node scripts/prepare-build.mjs",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint app components lib prisma scripts tests --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
@@ -15,14 +15,23 @@
     "prisma:push": "prisma db push",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "prisma:seed": "tsx prisma/seed.ts",
+    "release": "powershell -ExecutionPolicy Bypass -File scripts/release.ps1",
+    "rewards:api": "node services/rewards-api/server.js",
+    "rewards:issue-token": "node services/rewards-api/issue-token.js",
+    "rewards:blackhole-issuer": "node services/rewards-api/blackhole-issuer.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.88.0",
     "@clerk/nextjs": "^7.0.12",
     "@prisma/client": "^6.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "next": "16.2.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "xrpl": "^4.4.2",
     "zod": "^4.1.12"
   },
   "devDependencies": {
