@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 import { requireClanRole } from "@/lib/permissions";
 import { trackEvent } from "@/lib/events";
@@ -7,7 +7,8 @@ import { trackEvent } from "@/lib/events";
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function POST(request: Request, context: RouteContext) {
-  const actor = await requireSocietyUser();
+  const actor = await loadSocietyUser();
+  if (!actor) return societyUnauthorized();
   const { id } = await context.params;
   const payload = (await request.json()) as { userId?: string };
   const targetUserId = payload.userId ?? "";

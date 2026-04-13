@@ -1,11 +1,17 @@
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
+import type { User } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
-export async function requireSocietyUser() {
-  const clerkUser = await currentUser();
+export function societyUnauthorized() {
+  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+}
 
+export async function loadSocietyUser(): Promise<User | null> {
+  const clerkUser = await currentUser();
   if (!clerkUser) {
-    throw new Error("Unauthorized");
+    return null;
   }
 
   const displayName =
@@ -28,4 +34,13 @@ export async function requireSocietyUser() {
       image,
     },
   });
+}
+
+/** Use in Server Components / server actions; never call from Route Handlers. */
+export async function requireSocietyUser(): Promise<User> {
+  const user = await loadSocietyUser();
+  if (!user) {
+    redirect("/login");
+  }
+  return user;
 }

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { onboardingPointsById } from "@/lib/member-experience-data";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
 
 export async function POST(request: Request) {
-  const user = await requireSocietyUser();
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
   const payload = (await request.json()) as { stepId?: string; completed?: boolean };
   const stepId = payload.stepId ?? "";
   const completed = Boolean(payload.completed);

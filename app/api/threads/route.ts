@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { awardPoints } from "@/lib/progression";
 import { createThreadSchema } from "@/lib/validators";
@@ -79,7 +79,8 @@ export async function POST(request: Request) {
   }
   const { title, body } = parsed.data;
 
-  const user = await requireSocietyUser();
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
 
   const post = await prisma.post.create({
     data: {

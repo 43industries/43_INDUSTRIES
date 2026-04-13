@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { challengeRewardsById } from "@/lib/member-experience-data";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
@@ -14,7 +14,8 @@ function getWeekStart(value: Date) {
 }
 
 export async function POST(request: Request) {
-  const user = await requireSocietyUser();
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
   const payload = (await request.json()) as { challengeId?: string; completed?: boolean };
   const challengeId = payload.challengeId ?? "";
   const completed = Boolean(payload.completed);

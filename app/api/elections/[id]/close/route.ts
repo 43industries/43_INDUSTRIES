@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { requireClanRole } from "@/lib/permissions";
 import { trackEvent } from "@/lib/events";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function POST(_: Request, context: RouteContext) {
-  const user = await requireSocietyUser();
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
   const { id } = await context.params;
   const election = await prisma.election.findUnique({
     where: { id },

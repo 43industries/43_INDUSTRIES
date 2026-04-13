@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireSocietyUser } from "@/lib/society-user";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { getLibraryDocBySlug } from "@/lib/library";
 import { prisma } from "@/lib/prisma";
 import { awardPoints } from "@/lib/progression";
@@ -7,7 +7,8 @@ import { awardPoints } from "@/lib/progression";
 type RouteContext = { params: Promise<{ slug: string }> };
 
 export async function POST(_: Request, context: RouteContext) {
-  const user = await requireSocietyUser();
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
   const { slug } = await context.params;
   const doc = await getLibraryDocBySlug(slug);
 
