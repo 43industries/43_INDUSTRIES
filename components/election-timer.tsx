@@ -46,13 +46,16 @@ const statusConfig: Record<Status, { label: string; tone: "sky" | "emerald" | "z
 };
 
 export function ElectionTimer({ startsAt, endsAt }: ElectionTimerProps) {
-  const start = new Date(startsAt);
-  const end = new Date(endsAt);
+  const startMs = new Date(startsAt).getTime();
+  const endMs = new Date(endsAt).getTime();
 
-  const [status, setStatus] = useState<Status>(() => getStatus(start, end));
+  const [status, setStatus] = useState<Status>(() => getStatus(new Date(startMs), new Date(endMs)));
   const [countdown, setCountdown] = useState<string>("");
 
   useEffect(() => {
+    const start = new Date(startMs);
+    const end = new Date(endMs);
+
     function tick() {
       const s = getStatus(start, end);
       setStatus(s);
@@ -71,7 +74,7 @@ export function ElectionTimer({ startsAt, endsAt }: ElectionTimerProps) {
     tick();
     const id = setInterval(tick, 1_000);
     return () => clearInterval(id);
-  }, [start.getTime(), end.getTime()]);
+  }, [startMs, endMs]);
 
   const cfg = statusConfig[status];
 
