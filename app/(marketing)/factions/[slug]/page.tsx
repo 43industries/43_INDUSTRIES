@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SiteHeader } from "@/components/site-header";
 import { prisma } from "@/lib/prisma";
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -31,6 +32,8 @@ export default async function PublicFactionDetailPage({ params }: PageProps) {
   if (!clan || clan.visibility !== "PUBLIC") notFound();
 
   return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+      <SiteHeader />
     <div className="mx-auto max-w-4xl px-6 py-16 text-zinc-100">
       <h1 className="text-4xl font-semibold text-white">{clan.name}</h1>
       <p className="mt-4 text-zinc-300">{clan.description}</p>
@@ -49,6 +52,7 @@ export default async function PublicFactionDetailPage({ params }: PageProps) {
           <p className="text-xs text-zinc-400">Recent leadership terms</p>
         </div>
       </div>
+    </div>
     </div>
   );
 }

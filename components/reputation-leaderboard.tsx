@@ -1,3 +1,5 @@
+import { EmptyState } from "@/components/ui/empty-state";
+
 type LeaderboardEntry = {
   id: string;
   name: string;
@@ -17,19 +19,26 @@ export function ReputationLeaderboard({ entries }: { entries: LeaderboardEntry[]
         meaningful library reflections.
       </p>
       <div className="mt-6 space-y-2">
-        {fullBoard.map((entry) => (
-          <div
-            key={entry.id}
-            className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 py-2"
-          >
-            <p className="text-sm text-zinc-100">
-              #{entry.rank} {entry.name}
-            </p>
-            <p className="text-xs text-zinc-300">
-              {entry.points} pts · level {entry.level}
-            </p>
-          </div>
-        ))}
+        {fullBoard.length === 0 ? (
+          <EmptyState
+            title="No contributors yet"
+            description="Publish threads, complete challenges, and reflect on library entries to appear on the leaderboard."
+          />
+        ) : (
+          fullBoard.map((entry) => (
+            <div
+              key={entry.id}
+              className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 py-2"
+            >
+              <p className="text-sm text-zinc-100">
+                #{entry.rank} {entry.name}
+              </p>
+              <p className="text-xs text-zinc-300">
+                {entry.points} pts · level {entry.level}
+              </p>
+            </div>
+          ))
+        )}
       </div>
     </section>
   );

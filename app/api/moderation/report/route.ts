@@ -1,12 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { loadSocietyUser, societyUnauthorized } from "@/lib/society-user";
 import { moderationReportSchema } from "@/lib/validators";
+import { trackEvent } from "@/lib/events";
 
 export async function POST(request: Request) {
-  const { userId } = await auth();
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const user = await loadSocietyUser();
+  if (!user) return societyUnauthorized();
 
   const parsed = moderationReportSchema.safeParse(await request.json());
   if (!parsed.success) {
@@ -14,20 +14,23 @@ export async function POST(request: Request) {
   }
   const { targetType, targetId, reason, details } = parsed.data;
 
-  return NextResponse.json(
-    {
-      accepted: true,
-      report: {
-        id: `stub_${Date.now()}`,
-        reporterId: userId,
-        targetType,
-        targetId,
-        reason,
-        details,
-        status: "pending",
-      },
-      message: "Report recorded in moderation stub queue.",
+  const report = await prisma.moderationReport.create({
+    data: {
+      reporterId: user.id,
+      targetType,
+      targetPostId: targetType === "thread" ? targetId : null,
+      targetCommentId: targetType === "comment" ? targetId : null,
+      reason,
+      details: details ?? null,
     },
-    { status: 202 },
-  );
+  });
+
+  await trackEvent("REPORT_CREATED", {
+    actorId: user.id,
+    reportId: report.id,
+    targetType,
+    targetId,
+  });
+
+  return NextResponse.json({ accepted: true, report }, { status: 202 });
 }

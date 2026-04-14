@@ -7,8 +7,14 @@ export function SiteFooter() {
         <div className="space-y-2 text-sm text-zinc-400">
           <p className="font-medium text-zinc-200">Safety and trust</p>
           <p className="max-w-xl">
-            User-generated discussion is moderated with clear reporting paths. This
-            placeholder will link to society guidelines when Phase B ships.
+            All user-generated content is moderated through clear reporting paths. Members
+            can flag threads and comments for spam, abuse, misinformation, or off-topic
+            content. Reports are reviewed by Elders and Moderators with actions ranging
+            from content removal to temporary posting cooldowns. See our{" "}
+            <Link href="/terms" className="text-violet-300 hover:text-violet-200">
+              Terms of Use
+            </Link>{" "}
+            for full community guidelines.
           </p>
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-zinc-400">
