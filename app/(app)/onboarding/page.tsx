@@ -3,6 +3,8 @@ import { OnboardingChecklist } from "@/components/onboarding-checklist";
 import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function OnboardingPage() {
   const user = await requireSocietyUser();
   const onboarding = await prisma.onboardingCompletion.findMany({

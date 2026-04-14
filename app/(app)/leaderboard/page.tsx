@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ReputationLeaderboard } from "@/components/reputation-leaderboard";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function LeaderboardPage() {
   const topProgress = await prisma.profileProgress.findMany({
     orderBy: [{ points: "desc" }, { lastEventAt: "desc" }],

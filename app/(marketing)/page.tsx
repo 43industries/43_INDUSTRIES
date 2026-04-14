@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getSocietyInsights } from "@/lib/society-insights";
 
+export const dynamic = "force-dynamic";
+
 const pillars = [
   {
     title: "Discovery",

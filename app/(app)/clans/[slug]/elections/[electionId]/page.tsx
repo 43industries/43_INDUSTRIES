@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { ElectionTimer } from "@/components/election-timer";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = { params: Promise<{ slug: string; electionId: string }> };
 
 export default async function ElectionDetailPage({ params }: PageProps) {

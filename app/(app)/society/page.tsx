@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ThreadComposer } from "@/components/thread-composer";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const PAGE_SIZE = 10;
 type SocietyThread = {
   id: string;

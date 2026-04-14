@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ElectionTimer } from "@/components/election-timer";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = { params: Promise<{ slug: string }> };
 
 export default async function ClanGovernancePage({ params }: PageProps) {

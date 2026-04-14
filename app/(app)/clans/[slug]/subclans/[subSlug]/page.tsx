@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = { params: Promise<{ slug: string; subSlug: string }> };
 
 export default async function SubClanDetailPage({ params }: PageProps) {

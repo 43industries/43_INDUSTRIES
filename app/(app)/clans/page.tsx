@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ClanCard } from "@/components/clan-card";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function ClansPage() {
   const clans = await prisma.clan.findMany({
     orderBy: { createdAt: "desc" },

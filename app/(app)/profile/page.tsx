@@ -1,6 +1,8 @@
 import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePage() {
   const user = await requireSocietyUser();
   const progress = await prisma.profileProgress.findUnique({

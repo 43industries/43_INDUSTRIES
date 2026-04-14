@@ -6,6 +6,8 @@ import { getSocietyInsights } from "@/lib/society-insights";
 import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 function getWeekStart(value: Date) {
   const date = new Date(value);
   const day = date.getUTCDay();

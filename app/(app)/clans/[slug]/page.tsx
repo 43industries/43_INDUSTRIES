@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { requireSocietyUser } from "@/lib/society-user";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };

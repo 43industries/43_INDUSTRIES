@@ -3,6 +3,8 @@ import { ClanCard } from "@/components/clan-card";
 import { SiteHeader } from "@/components/site-header";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function PublicFactionsPage() {
   let clans: Awaited<ReturnType<typeof prisma.clan.findMany>> = [];
   let dbUnavailable = false;
