@@ -3,24 +3,31 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Show, UserButton, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { NotificationBell } from "@/components/notification-bell";
 
 const nav = [
-  { href: "/library", label: "Library" },
-  { href: "/society", label: "Society" },
-  { href: "/factions", label: "Factions" },
+  { href: "/move", label: "Payments & Infra" },
+  { href: "/invest", label: "Asset Management" },
+  { href: "/developers", label: "Developers" },
   { href: "/plans", label: "Plans" },
-  { href: "/dashboard", label: "Dashboard" },
+  { href: "/support", label: "Support" },
+  { href: "/dashboard", label: "Hub" },
 ] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur">
+    <header className="border-b border-purple-500/20 bg-zinc-950/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-5">
-        <Link href="/" className="text-lg font-semibold tracking-wide text-yellow-400">
-          43 Industries
-        </Link>
+        <div className="flex flex-col">
+          <Link href="/" className="text-lg font-bold tracking-wide text-yellow-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]">
+            43
+          </Link>
+          <p className="hidden text-[10px] uppercase tracking-[0.18em] text-zinc-500 md:block">
+            Two main branches, one ecosystem
+          </p>
+        </div>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 text-sm text-zinc-300 md:flex">
@@ -28,7 +35,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="transition hover:text-violet-200"
+              className="transition hover:text-purple-300"
             >
               {item.label}
             </Link>
@@ -43,7 +50,7 @@ export function SiteHeader() {
               </button>
             </SignInButton>
             <SignUpButton mode="redirect">
-              <button className="rounded-full bg-yellow-400 px-4 py-2 text-sm font-medium text-zinc-950 shadow-sm shadow-violet-500/25 transition hover:bg-yellow-300">
+              <button className="rounded-full bg-yellow-400 px-4 py-2 text-sm font-medium text-zinc-950 shadow-sm shadow-purple-500/25 transition hover:bg-yellow-300">
                 Join
               </button>
             </SignUpButton>
@@ -53,8 +60,9 @@ export function SiteHeader() {
               href="/dashboard"
               className="hidden text-sm text-zinc-300 transition hover:text-white md:inline"
             >
-              Go to app
+              Money hub
             </Link>
+            <NotificationBell />
             <UserButton />
           </Show>
 
@@ -87,7 +95,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="text-sm text-zinc-300 transition hover:text-violet-200"
+                className="text-sm text-zinc-300 transition hover:text-purple-300"
               >
                 {item.label}
               </Link>
@@ -98,7 +106,7 @@ export function SiteHeader() {
                 onClick={() => setOpen(false)}
                 className="text-sm text-zinc-300 transition hover:text-white"
               >
-                Go to app
+                Money hub
               </Link>
             </Show>
           </div>

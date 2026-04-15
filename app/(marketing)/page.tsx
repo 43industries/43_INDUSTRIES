@@ -1,216 +1,157 @@
 import Link from "next/link";
-import { LiveSignals } from "@/components/live-signals";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { getSocietyInsights } from "@/lib/society-insights";
 
-export const dynamic = "force-dynamic";
+const divisions = [
+  {
+    title: "Payments & Infrastructure",
+    subtitle: "Main Branch 01",
+    body: "Move value across borders with remittances, payout rails, and developer APIs. Kenya-first corridors, transparent FX, and infrastructure that scales with partner volume.",
+    href: "/move",
+    accent: "text-purple-300",
+  },
+  {
+    title: "Asset Management",
+    subtitle: "Main Branch 02",
+    body: "Grow wealth through crypto portfolios, tokenized RWAs, and structured savings products. Built with suitability gates, reporting discipline, and clear fee logic.",
+    href: "/invest",
+    accent: "text-amber-200",
+  },
+] as const;
 
 const pillars = [
   {
-    title: "Discovery",
-    text: "A public surface that explains what 43 Industries is and why the society exists.",
+    title: "One ledger",
+    text: "Earn, move, and invest from a single customer graph—no disconnected silos.",
   },
   {
-    title: "Participation",
-    text: "Authenticated profiles, threads, and shared spaces with moderation hooks from day one.",
+    title: "Licensed rails first",
+    text: "Settlement through regulated partners until your own licenses and treasury scale.",
   },
   {
-    title: "Engagement",
-    text: "Light progression—seasonal challenges and badges tied to real participation, not a separate game client.",
-  },
-  {
-    title: "Depth",
-    text: "A research hub with tagged library entries, datasets or links, and discuss threads per article.",
+    title: "Developer-grade",
+    text: "The same primitives that power retail will power B2B integrations.",
   },
 ] as const;
 
-const differentiators = [
-  "One identity across discussions, library depth, and progression",
-  "Server-validated reputation so effort and quality are rewarded fairly",
-  "Shared tags connect discovery, conversation, and challenges in one loop",
-  "Live homepage signals keep the brand surface fresh and society-driven",
-] as const;
-
-export default async function Home() {
-  const insights = await getSocietyInsights();
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-violet-950/15 to-zinc-950 text-zinc-100">
-      <SiteHeader />
-
-      <main>
-        <section className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1.1fr_0.9fr] md:py-28">
-          <div className="space-y-6">
-            <p className="text-sm uppercase tracking-[0.25em] text-violet-300/90">
-              Society platform
-            </p>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
-              The most electric industrial society on the internet.
-            </h1>
-            <p className="max-w-xl text-lg text-zinc-300">
-              43 Industries turns passive readers into active builders through one
-              connected experience: premium storytelling, serious member discussion,
-              challenge-based momentum, and a research hub that compounds insight.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/join"
-                className="rounded-full bg-yellow-400 px-6 py-3 font-medium text-zinc-950 shadow-md shadow-violet-500/20 transition hover:bg-yellow-300"
-              >
-                Create account
-              </Link>
-              <Link
-                href="/library"
-                className="rounded-full border border-zinc-600 px-6 py-3 font-medium text-zinc-100 transition hover:border-violet-400/60 hover:text-yellow-200"
-              >
-                Browse the library
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-zinc-800/90 bg-zinc-900/70 p-8 shadow-2xl shadow-violet-950/40 ring-1 ring-violet-500/10">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-400">
-              Phased delivery
-            </p>
-            <ul className="mt-6 space-y-4 text-sm text-zinc-300">
-              <li>
-                <span className="font-semibold text-white">Phase A</span> — Skeleton,
-                marketing shell, and live teaser hooks (this page).
-              </li>
-              <li>
-                <span className="font-semibold text-white">Phase B</span> — Auth,
-                profiles, and first discussion flows.
-              </li>
-              <li>
-                <span className="font-semibold text-white">Phase C–E</span> — Library
-                MDX, game loop, polish, and moderation depth.
-              </li>
-            </ul>
-            <p className="mt-6 text-xs text-zinc-500">
-              Deploy target: Vercel + managed Postgres when the data layer is wired.
-            </p>
-          </div>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 py-16">
-          <h2 className="text-3xl font-semibold text-white">Why this wins attention</h2>
-          <p className="mt-3 max-w-3xl text-zinc-400">
-            The best societies feel alive, useful, and earned. This product is built
-            so every visit reveals activity, every contribution matters, and every member
-            sees momentum in their profile.
+    <main>
+      <section
+        className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1.1fr_0.9fr] md:py-28"
+        style={{
+          background: "radial-gradient(ellipse at top, rgba(168, 85, 247, 0.08) 0%, transparent 60%)",
+        }}
+      >
+        <div className="space-y-6">
+          <p className="text-sm uppercase tracking-[0.25em] text-purple-400">43 Industries</p>
+          <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
+            One ecosystem. Two main branches. One money story.
+          </h1>
+          <p className="max-w-xl text-lg text-zinc-300">
+            43 Industries is built around two core branches: Payments & Infrastructure and Asset
+            Management. Both run on a shared identity, compliance posture, and ledger so earning,
+            moving, and investing money feels seamless instead of stitched together.
           </p>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {differentiators.map((item) => (
-              <article
-                key={item}
-                className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 text-zinc-200 transition hover:border-violet-500/30"
-              >
-                {item}
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/join"
+              className="rounded-full bg-yellow-400 px-6 py-3 font-medium text-zinc-950 shadow-md shadow-purple-500/20 transition hover:bg-yellow-300"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/developers"
+              className="rounded-full border border-zinc-600 px-6 py-3 font-medium text-zinc-100 transition hover:border-purple-400/60 hover:text-yellow-200"
+            >
+              Explore APIs
+            </Link>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-zinc-800/90 bg-zinc-900/70 p-8 shadow-2xl shadow-purple-950/40 ring-1 ring-purple-500/10">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-purple-400">Main branches</p>
+          <p className="mt-2 text-sm text-zinc-400">
+            These are the primary operating branches of the company.
+          </p>
+          <ul className="mt-6 space-y-5">
+            {divisions.map((d) => (
+              <li key={d.href}>
+                <Link href={d.href} className="group block rounded-xl border border-zinc-800/80 bg-zinc-950/50 p-4 transition hover:border-purple-500/35">
+                  <p className={`text-xs font-medium uppercase tracking-wide ${d.accent}`}>{d.subtitle}</p>
+                  <p className="mt-1 font-semibold text-white group-hover:text-yellow-200">{d.title}</p>
+                  <p className="mt-2 text-sm text-zinc-400">{d.body}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-800 py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <h2 className="text-center text-3xl font-semibold text-white md:text-left">Shared operating core</h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {pillars.map((p) => (
+              <article key={p.title} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+                <h3 className="text-lg font-semibold text-yellow-300">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-400">{p.text}</p>
               </article>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="mx-auto w-full max-w-6xl space-y-8 px-6 py-16">
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-semibold text-white">Live society signals</h2>
-              <p className="mt-2 max-w-2xl text-zinc-400">
-                Real activity from the society, library, and challenge system appears here.
-              </p>
-            </div>
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="rounded-3xl border border-zinc-800 bg-zinc-900/70 p-8">
+          <h2 className="text-2xl font-semibold text-white">Branch rollout status</h2>
+          <p className="mt-3 max-w-3xl text-zinc-300">
+            Payments & Infrastructure and Asset Management both route through the same money hub.
+            Consumer wallet, portfolio, and API console surfaces are active while integrations continue to
+            harden. Legacy society features are being retired—see{" "}
+            <Link href="/support#legacy" className="text-yellow-300 hover:text-yellow-200">
+              Support → Legacy
+            </Link>
+            .
+          </p>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <Link
+              href="/plans"
+              className="rounded-full border border-purple-400/50 px-5 py-2 text-sm font-semibold text-purple-100 hover:border-purple-300"
+            >
+              Public plans
+            </Link>
+            <Link
+              href="/support"
+              className="rounded-full border border-zinc-600 px-5 py-2 text-sm font-semibold text-zinc-100 hover:border-zinc-500"
+            >
+              Support
+            </Link>
           </div>
-          <LiveSignals insights={insights} />
-        </section>
+        </div>
+      </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-16">
-          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/70 p-8">
-            <h2 className="text-3xl font-semibold text-white">World map and public plans</h2>
-            <p className="mt-3 max-w-3xl text-zinc-300">
-              Explore clans, sub-clans, and the open roadmap before you join the member layer.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-4">
-              <Link
-                href="/factions"
-                className="rounded-full border border-violet-400/50 px-5 py-2 text-sm font-semibold text-violet-100 hover:border-violet-300"
-              >
-                Explore factions
-              </Link>
-              <Link
-                href="/plans"
-                className="rounded-full border border-zinc-600 px-5 py-2 text-sm font-semibold text-zinc-100 hover:border-zinc-500"
-              >
-                View public plans
-              </Link>
-            </div>
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="rounded-3xl border border-yellow-400/35 bg-gradient-to-br from-yellow-400/10 via-zinc-900/80 to-purple-600/15 p-8 text-center ring-1 ring-purple-400/20">
+          <h2 className="text-3xl font-semibold text-white">Enter the ecosystem</h2>
+          <p className="mt-3 text-zinc-200">
+            Access both main branches through one account, or read the technical specs in{" "}
+            <code className="text-zinc-400">docs/fintech/</code>.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/join"
+              className="inline-flex rounded-full bg-yellow-400 px-6 py-3 font-semibold text-zinc-950 shadow-lg shadow-purple-600/25 transition hover:bg-yellow-300"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/login"
+              className="inline-flex rounded-full border border-zinc-600 px-6 py-3 font-semibold text-zinc-100 transition hover:border-purple-400/60"
+            >
+              Sign in
+            </Link>
           </div>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 py-16">
-          <h2 className="text-3xl font-semibold text-white">Four layers, one society</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {pillars.map((pillar) => (
-              <article
-                key={pillar.title}
-                className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 transition hover:border-violet-500/30"
-              >
-                <h3 className="text-xl font-semibold text-yellow-300">{pillar.title}</h3>
-                <p className="mt-3 text-zinc-300">{pillar.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 py-16">
-          <div className="rounded-3xl border border-violet-400/20 bg-zinc-900/70 p-8 ring-1 ring-violet-500/20">
-            <h2 className="text-3xl font-semibold text-white">Momentum loop</h2>
-            <p className="mt-3 max-w-3xl text-zinc-300">
-              The loop is simple and addictive: discover a signal, join the discussion,
-              complete a challenge, and earn visible credibility that unlocks deeper
-              participation.
-            </p>
-            <div className="mt-8 grid gap-4 text-sm md:grid-cols-4">
-              {[
-                "Discover: featured thread, article, challenge",
-                "Contribute: post, reflect, or complete task",
-                "Earn: points, badges, and trusted reputation",
-                "Return: fresh signals and higher-impact opportunities",
-              ].map((step) => (
-                <div key={step} className="rounded-xl border border-zinc-800 p-4 text-zinc-300">
-                  {step}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 py-20">
-          <div className="rounded-3xl border border-yellow-400/35 bg-gradient-to-br from-yellow-400/10 via-zinc-900/80 to-violet-600/15 p-8 text-center ring-1 ring-violet-400/20">
-            <h2 className="text-3xl font-semibold text-white">Help shape the hub</h2>
-            <p className="mt-3 text-zinc-200">
-              Join the waitlist for member tools, library contributions, and weekly
-              industry challenges.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/join"
-                className="inline-flex rounded-full bg-yellow-400 px-6 py-3 font-semibold text-zinc-950 shadow-lg shadow-violet-600/25 transition hover:bg-yellow-300"
-              >
-                Join the society
-              </Link>
-              <Link
-                href="/society"
-                className="inline-flex rounded-full border border-zinc-600 px-6 py-3 font-semibold text-zinc-100 transition hover:border-violet-400/60"
-              >
-                Preview discussions
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <SiteFooter />
-    </div>
+        </div>
+      </section>
+    </main>
   );
 }
